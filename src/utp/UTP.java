@@ -4,7 +4,6 @@ public class UTP
 {
     public static void main(String[] args) 
     {
-        // Creamos algunos estudiantes con códigos desordenados
         Estudiante[] estudiantes = 
         {
             new Estudiante("Carlos", 404),
@@ -17,33 +16,50 @@ public class UTP
         System.out.println("Lista original:");
         mostrarEstudiantes(estudiantes);
 
-        ordenamientoPorInsercion(estudiantes);
+        quickSort(estudiantes, 0, estudiantes.length - 1);
 
         System.out.println("\n Lista ordenada por código:");
         mostrarEstudiantes(estudiantes);
     }
 
-    // Algoritmo de ordenamiento por inserción
-    public static void ordenamientoPorInsercion(Estudiante[] estudiante) 
-    {
-        for (int i = 1; i < estudiante.length; i++) {
-            Estudiante actual = estudiante[i];
-            int j = i - 1;
+    // implementamos el metodovQuickSort
+    public static void quickSort(Estudiante[] estudiantes, int inicio, int fin) {
+        if (inicio < fin) {
+            int indicePivote = particion(estudiantes, inicio, fin);
 
-            // Desplazamos a la derecha los elementos mayores al "actual"
-            while (j >= 0 && estudiante[j].getCodigo() > actual.getCodigo()) 
-            {
-                estudiante[j + 1] = estudiante[j];
-                j--;
-            }
-
-            estudiante[j + 1] = actual;
+            // Ordenamos las dos mitades
+            quickSort(estudiantes, inicio, indicePivote - 1);
+            quickSort(estudiantes, indicePivote + 1, fin);
         }
     }
 
-    public static void mostrarEstudiantes(Estudiante[] estudiante) {
-        for (Estudiante e : estudiante) {
-            System.out.println(e);
+    // partición del arreglo
+    public static int particion(Estudiante[] estudiantes, int inicio, int fin) {
+        Estudiante pivote = estudiantes[fin]; // Último como pivote
+        int i = inicio - 1;
+
+        for (int j = inicio; j < fin; j++) {
+            if (estudiantes[j].getCodigo() <= pivote.getCodigo()) {
+                i++;
+                // Intercambiamos
+                Estudiante temp = estudiantes[i];
+                estudiantes[i] = estudiantes[j];
+                estudiantes[j] = temp;
+            }
+        }
+
+        // Colocamos el pivote en su lugar correcto
+        Estudiante temp = estudiantes[i + 1];
+        estudiantes[i + 1] = estudiantes[fin];
+        estudiantes[fin] = temp;
+
+        return i + 1;
+    }
+
+    // mostrar lista
+    public static void mostrarEstudiantes(Estudiante[] estudiantes) {
+        for (Estudiante estu : estudiantes) {
+            System.out.println(estu);
         }
     }
     

@@ -1,6 +1,7 @@
 package modelo;
 
-public class Estudiante {
+public class Estudiante 
+{
     private String nombre;
     private int codigo;
 
@@ -19,6 +20,6 @@ public class Estudiante {
 
     @Override
     public String toString() {
-        return "Estudiante: " + nombre + " | Código: " + codigo;
+        return "Estudiante: " + nombre + " | Código: " + codigo;     
     }
 }
